@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  app:
+    container_name: fitness-booking
+    build:
+      context: ..
+      dockerfile: "fitness_booking/docker/Dockerfile"
+    command: >
+       sh -c "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py collectstatic --noinput &&
+              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/code
+    ports:
+      - ${WEB_PORT}:8000
+    networks:
+      - fitness_booking
+    depends_on:
+      - db
+
+  db:
+    image: nouchka/sqlite3
+    container_name: fitness_booking_db
+    volumes:
+      - sqlite_data:/data
+
+volumes:
+  sqlite_data:
+networks:
+  fitness_booking:
+    driver: bridge
