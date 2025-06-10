@@ -54,4 +54,55 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+## 🔌 API Endpoints
+
+### 1. List Upcoming Fitness Classes
+
+- **Endpoint:** `GET /api/classes/`
+- **Optional Timezone Parameter:**
+  - Pass `?timezone=Asia/Kolkata` or any valid [pytz timezone]
+
+#### 📦 Example (cURL)
+```bash
+curl -X GET "http://127.0.0.1:8000/api/classes/?timezone=Asia/Kolkata"
+```
+
+## 📌 2. Book a Class
+
+**Endpoint:** `POST /api/book/`
+
+**Request Body:**
+
+```json
+{
+  "fitness_class": "uuid-of-class",
+  "client_name": "John Doe",
+  "client_email": "john@example.com"
+}
+```
+
+**Example (cURL):**
+```bash
+curl -X POST http://127.0.0.1:8000/api/book/ \
+-H "Content-Type: application/json" \
+-d '{
+  "fitness_class": "your-class-uuid-here",
+  "client_name": "John Doe",
+  "client_email": "john@example.com"
+}'
+```
+
+## 3. 📋 View Bookings by Email
+
+**Endpoint:** `GET /api/bookings/?email=john@example.com`
+
+**Example (cURL):**
+```bash
+curl "http://127.0.0.1:8000/api/bookings/?email=john@example.com"
+```
+
+### 🧪 Run Tests
+```bash
+python manage.py test
+```
 
